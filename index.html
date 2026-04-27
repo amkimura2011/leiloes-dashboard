@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio de Leilões — Painel Financeiro</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         background: #f8f7f4; color: #1a1a1a; padding: 24px; font-size: 14px; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .meta { font-size: 12px; color: #888; margin-bottom: 20px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .kpi { background: #fff; border: 0.5px solid #e5e3de; border-radius: 10px; padding: 14px 16px; }
+  .kpi-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+  .kpi-value { font-size: 22px; font-weight: 600; line-height: 1.1; }
+  .kpi-sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .blue { color: #185FA5; } .green { color: #3B6D11; }
+  .amber { color: #854F0B; } .muted { color: #888; }
+  .roi-track { height: 5px; background: #eee; border-radius: 3px; margin-top: 6px; }
+  .roi-fill { height: 5px; border-radius: 3px; background: #639922; }
+  .charts-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 14px; margin-bottom: 14px; }
+  .card { background: #fff; border: 0.5px solid #e5e3de; border-radius: 10px; padding: 16px 18px; }
+  .card-title { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase;
+                 letter-spacing: .04em; margin-bottom: 14px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
+  .dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  th { padding: 8px 10px; text-align: left; color: #999; font-weight: 400;
+        border-bottom: 0.5px solid #eee; font-size: 11px; }
+  td { padding: 9px 10px; border-bottom: 0.5px solid #f0ede8; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf8; }
+  .n { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 7px;
+            border-radius: 10px; font-weight: 500; }
+  .b-reg { background: #FAEEDA; color: #633806; }
+  .b-ref { background: #B5D4F4; color: #0C447C; }
+  .b-ven { background: #C0DD97; color: #27500A; }
+  .b-con { background: #9FE1CB; color: #085041; }
+  @media (max-width: 700px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .charts-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<h1>Portfólio de leilões — painel financeiro</h1>
+<p class="meta">Atualizado em 27/04/2026 · 12 imóveis · dados: Notion BD pós-arrematação</p>
+
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Imóveis ativos</div>
+    <div class="kpi-value">12</div>
+    <div class="kpi-sub">3 em venda · 1 vendidos</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Custo total planejado</div>
+    <div class="kpi-value blue">R$ 3,97M</div>
+    <div class="kpi-sub">todos os imóveis</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Custo × participação</div>
+    <div class="kpi-value blue">R$ 1,34M</div>
+    <div class="kpi-sub">minha fatia do capital</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Lucro plan. × participação</div>
+    <div class="kpi-value green">R$ 1,21M</div>
+    <div class="kpi-sub">Σ (venda − custo) × part.</div>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Lucro realizado × part.</div>
+    <div class="kpi-value green">R$ 42.268</div>
+    <div class="kpi-sub">vendas concluídas</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">ROI planejado × part.</div>
+    <div class="kpi-value green">90,4%</div>
+    <div class="roi-track"><div class="roi-fill" style="width:90.4%"></div></div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">ROI realizado × part.</div>
+    <div class="kpi-value green">34,0%</div>
+    <div class="roi-track"><div class="roi-fill" style="width:34.0%;background:#639922"></div></div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Venda total planejada</div>
+    <div class="kpi-value amber">R$ 7,18M</div>
+    <div class="kpi-sub">todos os imóveis</div>
+  </div>
+</div>
+
+<div class="charts-row">
+  <div class="card">
+    <div class="card-title">Imóveis por estágio</div>
+    <div style="position:relative;height:160px">
+      <canvas id="c1" role="img" aria-label="Donut de imóveis por estágio"></canvas>
+    </div>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:#FAC775"></span>Reg./Desocup. (5)</span>
+      <span class="leg"><span class="dot" style="background:#378ADD"></span>Reforma (3)</span>
+      <span class="leg"><span class="dot" style="background:#639922"></span>Em venda (3)</span>
+      <span class="leg"><span class="dot" style="background:#9FE1CB"></span>Concluído (1)</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Custo planejado × participação por imóvel</div>
+    <div style="position:relative;height:200px">
+      <canvas id="c2" role="img" aria-label="Barras de custo por imóvel"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:14px">
+  <div class="card-title">Custo plan. vs. venda plan. × participação</div>
+  <div style="position:relative;height:180px;margin-top:8px">
+    <canvas id="c3" role="img" aria-label="Custo vs venda por imóvel"></canvas>
+  </div>
+  <div class="legend" style="margin-top:10px">
+    <span class="leg"><span class="dot" style="background:#378ADD"></span>Custo × part.</span>
+    <span class="leg"><span class="dot" style="background:#639922"></span>Venda plan. × part.</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Detalhe por imóvel</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28%">Imóvel</th>
+        <th style="width:20%">Estágio</th>
+        <th class="n" style="width:8%">Part.</th>
+        <th class="n" style="width:18%">Custo × part.</th>
+        <th class="n" style="width:18%">Lucro plan. × part.</th>
+        <th class="n" style="width:8%">ROI plan.</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Apartamento Guarulhos</td>
+          <td><span class="badge b-ven">Em venda</span></td>
+          <td class="n">50%</td>
+          <td class="n">R$ 246.481</td>
+          <td class="n" style="color:#3B6D11">R$ 106.019</td>
+          <td class="n" style="color:#854F0B">43,0%</td>
+        </tr>
+        <tr>
+          <td>Casa 4 Carapicuiba</td>
+          <td><span class="badge b-ref">Reforma</span></td>
+          <td class="n">25%</td>
+          <td class="n">R$ 186.462</td>
+          <td class="n" style="color:#3B6D11">R$ 119.038</td>
+          <td class="n" style="color:#3B6D11">63,8%</td>
+        </tr>
+        <tr>
+          <td>Casa São Carlos</td>
+          <td><span class="badge b-ven">Em venda</span></td>
+          <td class="n">50%</td>
+          <td class="n">R$ 52.809</td>
+          <td class="n" style="color:#3B6D11">R$ 177.491</td>
+          <td class="n" style="color:#3B6D11">336,1%</td>
+        </tr>
+        <tr>
+          <td>Casa Palmital</td>
+          <td><span class="badge b-ven">Em venda</span></td>
+          <td class="n">50%</td>
+          <td class="n">R$ 45.687</td>
+          <td class="n" style="color:#3B6D11">R$ 165.813</td>
+          <td class="n" style="color:#3B6D11">362,9%</td>
+        </tr>
+        <tr>
+          <td>Casa Apucarana</td>
+          <td><span class="badge b-ref">Reforma</span></td>
+          <td class="n">33%</td>
+          <td class="n">R$ 108.217</td>
+          <td class="n" style="color:#3B6D11">R$ 46.883</td>
+          <td class="n" style="color:#854F0B">43,3%</td>
+        </tr>
+        <tr>
+          <td>Casa Cuiabá</td>
+          <td><span class="badge b-ref">Reforma</span></td>
+          <td class="n">40%</td>
+          <td class="n">R$ 125.051</td>
+          <td class="n" style="color:#3B6D11">R$ 81.749</td>
+          <td class="n" style="color:#3B6D11">65,4%</td>
+        </tr>
+        <tr>
+          <td>Apartamento Mooca SP</td>
+          <td><span class="badge b-reg">Registro e Desocupação</span></td>
+          <td class="n">25%</td>
+          <td class="n">R$ 92.859</td>
+          <td class="n" style="color:#3B6D11">R$ 43.441</td>
+          <td class="n" style="color:#854F0B">46,8%</td>
+        </tr>
+        <tr>
+          <td>Casa 2 Carapicuiba</td>
+          <td><span class="badge b-reg">Registro e Desocupação</span></td>
+          <td class="n">25%</td>
+          <td class="n">R$ 209.180</td>
+          <td class="n" style="color:#3B6D11">R$ 143.320</td>
+          <td class="n" style="color:#3B6D11">68,5%</td>
+        </tr>
+        <tr>
+          <td>Casa cond. Salvador BA</td>
+          <td><span class="badge b-reg">Registro e Desocupação</span></td>
+          <td class="n">50%</td>
+          <td class="n">R$ 135.032</td>
+          <td class="n" style="color:#3B6D11">R$ 234.968</td>
+          <td class="n" style="color:#3B6D11">174,0%</td>
+        </tr>
+        <tr>
+          <td>Casa Bauru (Judicial)</td>
+          <td><span class="badge b-reg">Registro e Desocupação</span></td>
+          <td class="n">33%</td>
+          <td class="n">R$ 71.075</td>
+          <td class="n" style="color:#3B6D11">R$ 54.246</td>
+          <td class="n" style="color:#3B6D11">76,3%</td>
+        </tr>
+        <tr>
+          <td>Casa Hípica - Porto Alegre</td>
+          <td><span class="badge b-con">Concluído</span></td>
+          <td class="n">33%</td>
+          <td class="n">R$ 0</td>
+          <td class="n" style="color:#3B6D11">R$ 0</td>
+          <td class="n" style="color:#888780">0,0%</td>
+        </tr>
+        <tr>
+          <td>Casa Feira de Santana</td>
+          <td><span class="badge b-reg">Registro e Desocupação</span></td>
+          <td class="n">35%</td>
+          <td class="n">R$ 69.232</td>
+          <td class="n" style="color:#3B6D11">R$ 40.493</td>
+          <td class="n" style="color:#3B6D11">58,5%</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<script>
+const labels = ["Apto Guarulhos", "Casa 4 Carapicuiba", "Casa S\u00e3o Carlos", "Casa Palmital", "Casa Apucarana", "Casa Cuiab\u00e1", "Apto Mooca SP", "Casa 2 Carapicuiba", "Cond. Salvador BA", "Casa Bauru (Judicial)", "Casa H\u00edpica - Porto Alegre", "Feira de Santana"];
+const custos = [246481, 186462, 52809, 45687, 108217, 125051, 92859, 209180, 135032, 71075, 0, 69232];
+const vendas = [352500, 305500, 230300, 211500, 155100, 206800, 136300, 352500, 370000, 125321, 0, 109725];
+const donut  = [5, 3, 3, 1];
+const tc = "rgba(0,0,0,0.4)", gc = "rgba(0,0,0,0.06)";
+const fmtK = v => "R$ " + Math.round(v/1000) + "k";
+const fmtFull = v => "R$ " + Math.round(v).toLocaleString("pt-BR");
+
+new Chart(document.getElementById("c1"), {
+  type: "doughnut",
+  data: {
+    labels: ["Reg./Desocup.", "Reforma", "Em venda", "Concluído"],
+    datasets: [{ data: donut, backgroundColor: ["#FAC775","#378ADD","#639922","#9FE1CB"], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: "68%",
+    plugins: { legend: { display: false },
+                tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw}` } } }
+  }
+});
+
+new Chart(document.getElementById("c2"), {
+  type: "bar",
+  data: {
+    labels: labels,
+    datasets: [{ data: custos, backgroundColor: "#378ADD", borderRadius: 3, borderSkipped: false }]
+  },
+  options: {
+    indexAxis: "y", responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => " " + fmtFull(c.raw) } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 10 }, callback: v => fmtK(v) }, grid: { color: gc }, border: { display: false } },
+      y: { ticks: { color: tc, font: { size: 10 } }, grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+const shortLabels = labels.map(l => l.replace(/^Casa /,"").replace(/^Apartamento /,"Apto ").replace("cond. ",""));
+new Chart(document.getElementById("c3"), {
+  type: "bar",
+  data: {
+    labels: shortLabels,
+    datasets: [
+      { label: "Custo × part.", data: custos, backgroundColor: "#378ADD", borderRadius: 2 },
+      { label: "Venda plan. × part.", data: vendas, backgroundColor: "#639922", borderRadius: 2 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => " " + fmtFull(c.raw) } } },
+    scales: {
+      x: { ticks: { color: tc, font: { size: 9 }, maxRotation: 35, autoSkip: false },
+             grid: { display: false }, border: { display: false } },
+      y: { ticks: { color: tc, font: { size: 10 }, callback: v => fmtK(v) },
+             grid: { color: gc }, border: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
