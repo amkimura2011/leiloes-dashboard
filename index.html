@@ -48,27 +48,27 @@
 </head>
 <body>
 <h1>Portfólio de leilões — painel financeiro</h1>
-<p class="meta">Atualizado em 14/09/2026 · 12 imóveis · dados: Notion BD pós-arrematação</p>
+<p class="meta">Atualizado em 16/11/2026 · 13 imóveis · dados: Notion BD pós-arrematação</p>
 
 <div class="kpi-grid">
   <div class="kpi">
     <div class="kpi-label">Imóveis ativos</div>
-    <div class="kpi-value">12</div>
-    <div class="kpi-sub">5 em venda · 1 vendidos</div>
+    <div class="kpi-value">13</div>
+    <div class="kpi-sub">7 em venda · 1 vendidos</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Custo total planejado</div>
-    <div class="kpi-value blue">R$ 4,34M</div>
+    <div class="kpi-value blue">R$ 5,07M</div>
     <div class="kpi-sub">todos os imóveis</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Custo × participação</div>
-    <div class="kpi-value blue">R$ 1,47M</div>
+    <div class="kpi-value blue">R$ 2,23M</div>
     <div class="kpi-sub">minha fatia do capital</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Lucro plan. × participação</div>
-    <div class="kpi-value green">R$ 1,22M</div>
+    <div class="kpi-value green">R$ 1,24M</div>
     <div class="kpi-sub">Σ (venda − custo) × part.</div>
   </div>
 </div>
@@ -81,8 +81,8 @@
   </div>
   <div class="kpi">
     <div class="kpi-label">ROI planejado × part.</div>
-    <div class="kpi-value green">83,3%</div>
-    <div class="roi-track"><div class="roi-fill" style="width:83.3%"></div></div>
+    <div class="kpi-value green">85,6%</div>
+    <div class="roi-track"><div class="roi-fill" style="width:85.6%"></div></div>
   </div>
   <div class="kpi">
     <div class="kpi-label">ROI realizado × part.</div>
@@ -104,8 +104,8 @@
     </div>
     <div class="legend">
       <span class="leg"><span class="dot" style="background:#FAC775"></span>Reg./Desocup. (3)</span>
-      <span class="leg"><span class="dot" style="background:#378ADD"></span>Reforma (3)</span>
-      <span class="leg"><span class="dot" style="background:#639922"></span>Em venda (5)</span>
+      <span class="leg"><span class="dot" style="background:#378ADD"></span>Reforma (2)</span>
+      <span class="leg"><span class="dot" style="background:#639922"></span>Em venda (7)</span>
       <span class="leg"><span class="dot" style="background:#9FE1CB"></span>Concluído (1)</span>
     </div>
   </div>
@@ -146,9 +146,9 @@
           <td>Casa Hípica - Porto Alegre - RS</td>
           <td><span class="badge b-con">Concluído</span></td>
           <td class="n">33%</td>
-          <td class="n">R$ 124.382</td>
-          <td class="n" style="color:#3B6D11">R$ 7.618</td>
-          <td class="n" style="color:#888780">6,1%</td>
+          <td class="n">R$ 105.600</td>
+          <td class="n" style="color:#3B6D11">R$ 26.400</td>
+          <td class="n" style="color:#854F0B">25,0%</td>
         </tr>
         <tr>
           <td>Apartamento Guarulhos</td>
@@ -216,7 +216,7 @@
         </tr>
         <tr>
           <td>Apartamento Mooca SP</td>
-          <td><span class="badge b-ref">Reforma</span></td>
+          <td><span class="badge b-ven">Em venda</span></td>
           <td class="n">25%</td>
           <td class="n">R$ 92.859</td>
           <td class="n" style="color:#3B6D11">R$ 43.441</td>
@@ -237,15 +237,23 @@
           <td class="n">R$ 71.075</td>
           <td class="n" style="color:#3B6D11">R$ 54.246</td>
           <td class="n" style="color:#3B6D11">76,3%</td>
+        </tr>
+        <tr>
+          <td>Casa Nova Piracicaba</td>
+          <td><span class="badge b-ven">Em venda</span></td>
+          <td class="n">100%</td>
+          <td class="n">R$ 785.760</td>
+          <td class="n" style="color:#3B6D11">R$ 0</td>
+          <td class="n" style="color:#888780">0,0%</td>
         </tr></tbody>
   </table>
 </div>
 
 <script>
-const labels = ["Casa H\u00edpica - Porto Alegre - RS", "Apto Guarulhos", "Casa S\u00e3o Carlos", "Casa Palmital", "Casa Cuiab\u00e1", "Casa 4 Carapicuiba", "Casa Apucarana", "Feira de Santana", "Casa 2 Carapicuiba", "Apto Mooca SP", "Cond. Salvador BA", "Casa Bauru (Judicial)"];
-const custos = [124382, 246481, 52809, 45687, 125051, 186462, 108217, 69232, 209180, 92859, 135032, 71075];
-const vendas = [132000, 352500, 230300, 211500, 206800, 305500, 155100, 109725, 352500, 136300, 370000, 125321];
-const donut  = [3, 3, 5, 1];
+const labels = ["Casa H\u00edpica - Porto Alegre - RS", "Apto Guarulhos", "Casa S\u00e3o Carlos", "Casa Palmital", "Casa Cuiab\u00e1", "Casa 4 Carapicuiba", "Casa Apucarana", "Feira de Santana", "Casa 2 Carapicuiba", "Apto Mooca SP", "Cond. Salvador BA", "Casa Bauru (Judicial)", "Casa Nova Piracicaba"];
+const custos = [105600, 246481, 52809, 45687, 125051, 186462, 108217, 69232, 209180, 92859, 135032, 71075, 785760];
+const vendas = [132000, 352500, 230300, 211500, 206800, 305500, 155100, 109725, 352500, 136300, 370000, 125321, 0];
+const donut  = [3, 2, 7, 1];
 const tc = "rgba(0,0,0,0.4)", gc = "rgba(0,0,0,0.06)";
 const fmtK = v => "R$ " + Math.round(v/1000) + "k";
 const fmtFull = v => "R$ " + Math.round(v).toLocaleString("pt-BR");
